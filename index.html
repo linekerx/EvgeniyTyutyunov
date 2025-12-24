@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Евгений Тютюнов — CV</title>
+  <meta name="description" content="CV: Евгений Тютюнов — мастер тренер, методолог, архитектор обучения." />
+  <meta name="theme-color" content="#050505" />
+  <style>
+    :root{
+      --bg:#050505;
+      --fg:#f2f2f2;
+      --muted:rgba(242,242,242,.72);
+      --line:rgba(242,242,242,.14);
+      --card:rgba(255,255,255,.06);
+      --shadow: 0 24px 80px rgba(0,0,0,.55);
+      --radius:18px;
+      --radius2:24px;
+      --focus: 0 0 0 3px rgba(242,242,242,.22);
+
+      --padX: 18px;
+      --padTop: calc(18px + env(safe-area-inset-top));
+      --padBottom: calc(28px + env(safe-area-inset-bottom));
+      --tap: 44px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{color-scheme:dark}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.08), transparent 55%),
+                  radial-gradient(900px 700px at 85% 30%, rgba(255,255,255,.06), transparent 60%),
+                  var(--bg);
+      color:var(--fg);
+      overflow-x:hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Canvas background */
+    #snow{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      z-index:0; pointer-events:none;
+      opacity:.9;
+      will-change: transform;
+    }
+
+    .grain{
+      position:fixed; inset:0; z-index:1; pointer-events:none;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.04), transparent 55%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity:.25;
+    }
+
+    .wrap{
+      position:relative; z-index:2;
+      min-height:100%;
+      padding: var(--padTop) var(--padX) var(--padBottom);
+      display:flex; justify-content:center;
+    }
+    .container{
+      width:min(1100px, 100%);
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+    }
+
+    .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+    .dot{
+      width:9px;height:9px;border-radius:50%;
+      background: var(--fg);
+      opacity:.85;
+      box-shadow: 0 0 0 4px rgba(242,242,242,.10);
+      flex:0 0 auto;
+    }
+    .brand .name{
+      font-weight:650;
+      letter-spacing:.1px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 46vw;
+    }
+    .brand .role{
+      color:var(--muted);
+      font-size:13px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 58vw;
+    }
+
+    .controls{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+
+    .lang{
+      display:flex;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      overflow:hidden;
+      background: rgba(0,0,0,.18);
+      height: var(--tap);
+    }
+    .lang button{
+      border:0;
+      border-right:1px solid var(--line);
+      background: transparent;
+      color: rgba(242,242,242,.75);
+      padding: 0 12px;
+      font-size: 13px;
+      cursor:pointer;
+      min-width: 52px;
+      height: var(--tap);
+      touch-action: manipulation;
+    }
+    .lang button:last-child{border-right:0}
+    .lang button.active{ background: rgba(255,255,255,.10); color: var(--fg); }
+    .lang button:focus-visible{ outline:none; box-shadow: var(--focus); }
+
+    .action{
+      appearance:none;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--fg);
+      padding: 0 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      display:flex; align-items:center; gap:8px;
+      height: var(--tap);
+      touch-action: manipulation;
+      white-space:nowrap;
+    }
+    .action:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(242,242,242,.22);
+    }
+    .action:active{transform: translateY(0) scale(.99)}
+    .action:focus-visible{outline:none; box-shadow: var(--focus)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .hero{ padding: 20px 18px 14px; }
+    h1{
+      margin: 8px 0 10px;
+      font-size: clamp(26px, 6vw, 44px);
+      line-height:1.06;
+      letter-spacing:-.6px;
+      word-break: break-word;
+    }
+    .subtitle{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size: clamp(14px, 3.6vw, 16px);
+      line-height:1.65;
+      max-width: 80ch;
+    }
+    .meta{
+      display:flex; flex-wrap:wrap; gap:10px; margin-top: 10px;
+    }
+    .pill{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: rgba(242,242,242,.86);
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    .section{
+      padding: 16px 18px;
+      border-top: 1px solid var(--line);
+    }
+    .section h2{
+      margin:0 0 10px;
+      font-size: 13px;
+      letter-spacing:.35px;
+      text-transform: uppercase;
+      color: rgba(242,242,242,.92);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .section p, .section li{
+      color: rgba(242,242,242,.84);
+      line-height:1.75;
+      font-size: 14px;
+    }
+    .section p{margin:0}
+    .section ul{margin:10px 0 0 18px}
+    .section li{margin:6px 0}
+
+    .items{display:flex; flex-direction:column; gap:10px; margin-top:10px;}
+    .item{
+      border:1px solid rgba(242,242,242,.14);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding: 12px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .item .left{min-width:0}
+    .item .title{font-weight:650; margin:0 0 2px; font-size:14px;}
+    .item .sub{margin:0; color: var(--muted); font-size:13px; line-height:1.45;}
+    .item .tags{margin-top:8px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(242,242,242,.14);
+      background: rgba(255,255,255,.05);
+      color: rgba(242,242,242,.78);
+    }
+
+    .more{
+      flex:0 0 auto;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--fg);
+      padding: 0 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      white-space:nowrap;
+      height: var(--tap);
+      touch-action: manipulation;
+    }
+    .more:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(242,242,242,.22); }
+    .more:active{transform: translateY(0) scale(.99)}
+    .more:focus-visible{outline:none; box-shadow: var(--focus)}
+
+    .side{ padding: 14px; display:flex; flex-direction:column; gap:12px;}
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .panel h3{
+      margin:0 0 8px;
+      font-size: 13px;
+      letter-spacing:.25px;
+      color: rgba(242,242,242,.92);
+      text-transform: uppercase;
+    }
+    .panel p, .panel li{ margin:0; color: var(--muted); line-height:1.65; font-size:14px; }
+    .panel ul{ margin:8px 0 0 18px; }
+    .panel li{ margin:6px 0; }
+
+    .footer{
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 13px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      flex-wrap:wrap;
+    }
+    .footer a{ color: var(--fg); text-decoration:none; border-bottom:1px solid rgba(242,242,242,.25); }
+    .footer a:hover{ border-bottom-color: rgba(242,242,242,.55); }
+
+    /* Mobile tuning */
+    @media (max-width: 560px){
+      :root{ --padX: 14px; }
+      .topbar{ padding: 10px 12px; gap:10px; }
+      .brand{ gap:9px; }
+      .brand .name{ max-width: 52vw; font-size: 14px; }
+      .brand .role{ display:none; } /* на телефоне скрываем длинную строку роли */
+      .controls{ gap:8px; }
+      .action{ padding: 0 10px; }
+      .pill{ font-size:12px; padding: 8px 10px; }
+      .item{ flex-direction:column; }
+      .item .left{ width:100%; }
+      .item .tags{ gap:6px; }
+      .more{ width:100%; justify-content:center; }
+    }
+
+    /* Modal */
+    .modal-overlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 14px;
+      z-index:10;
+    }
+    .modal-overlay.open{display:flex}
+
+    .modal{
+      width: min(820px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(242,242,242,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow: 0 30px 110px rgba(0,0,0,.70);
+      overflow:hidden;
+      max-height: calc(100dvh - 28px);
+      display:flex;
+      flex-direction:column;
+    }
+    .modal-head{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 14px 14px;
+      border-bottom:1px solid var(--line);
+      flex:0 0 auto;
+    }
+    .modal-title{ margin:0; font-size: 14px; letter-spacing:.3px; color: rgba(242,242,242,.92); }
+    .icon-btn{
+      width: var(--tap); height: var(--tap);
+      border-radius: 14px;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      cursor:pointer;
+      color:var(--fg);
+      touch-action: manipulation;
+      flex:0 0 auto;
+    }
+    .icon-btn:hover{background: rgba(255,255,255,.10)}
+    .modal-body{
+      padding: 14px 14px 16px;
+      color: rgba(242,242,242,.84);
+      line-height:1.75;
+      font-size:14px;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .modal-body ul{margin:10px 0 0 18px}
+    .modal-body li{margin:6px 0}
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      color: rgba(242,242,242,.78);
+      border:1px solid rgba(242,242,242,.20);
+      padding: 3px 6px;
+      border-radius:8px;
+      background: rgba(0,0,0,.25);
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      #snow{ display:none; }
+      *{ scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="snow"></canvas>
+  <div class="grain"></div>
+
+  <main class="wrap">
+    <div class="container">
+      <header class="topbar">
+        <div class="brand">
+          <span class="dot"></span>
+          <div style="min-width:0">
+            <div class="name" data-i18n="top.name">Евгений Тютюнов</div>
+            <div class="role" data-i18n="top.role">Мастер тренер • методолог • архитектор обучения</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="lang" aria-label="Language switcher">
+            <button id="btnRU" type="button">RU</button>
+            <button id="btnEN" type="button">EN</button>
+          </div>
+          <button class="action" type="button" data-modal="contacts">
+            <span data-i18n="top.contact">Контакты</span> <span>→</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="grid">
+        <div class="card">
+          <div class="hero">
+            <h1 data-i18n="hero.h1">Евгений Тютюнов</h1>
+            <p class="subtitle" data-i18n="hero.subtitle">
+              Проектирую образовательные системы и программы: от диагностики потребностей до запуска и оценки результата.
+              Соединяю методологию, тренерскую практику и архитектуру обучения.
+            </p>
+            <div class="meta">
+              <div class="pill" data-i18n="hero.meta1">📍 Россия / онлайн</div>
+              <div class="pill" data-i18n="hero.meta2">🧠 L&D • методология</div>
+              <div class="pill" data-i18n="hero.meta3">⚙️ Архитектура обучения</div>
+              <div class="pill" data-i18n="hero.meta4">✦ Корпоративное обучение</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2><span data-i18n="sec.profile">Профиль</span>
+              <button class="more" type="button" data-modal="profile" data-i18n="btn.details">Подробнее</button>
+            </h2>
+            <p data-i18n="profile.short">
+              Мастер тренер и методолог, выстраиваю обучение как продукт: цели → навыки → практика → оценка → улучшения.
+              Создаю программы, методические стандарты, траектории обучения и системы развития.
+            </p>
+          </div>
+
+          <div class="section">
+            <h2><span data-i18n="sec.experience">Опыт</span>
+              <button class="more" type="button" data-modal="experience" data-i18n="btn.details">Подробнее</button>
+            </h2>
+
+            <div class="items">
+              <div class="item">
+                <div class="left">
+                  <p class="title" data-i18n="exp1.title">Lead L&D / Методолог (пример)</p>
+                  <p class="sub" data-i18n="exp1.sub">2023–2025 • Корпоративный университет / Академия</p>
+                  <div class="tags">
+                    <span class="tag" data-i18n="tags.arch">архитектура</span>
+                    <span class="tag" data-i18n="tags.method">методология</span>
+                    <span class="tag" data-i18n="tags.assess">оценка</span>
+                  </div>
+                </div>
+                <button class="more" type="button" data-modal="exp1" data-i18n="btn.case">Кейс</button>
+              </div>
+
+              <div class="item">
+                <div class="left">
+                  <p class="title" data-i18n="exp2.title">Мастер тренер / Тренер-методолог (пример)</p>
+                  <p class="sub" data-i18n="exp2.sub">2020–2023 • Программы для менеджеров и экспертов</p>
+                  <div class="tags">
+                    <span class="tag" data-i18n="tags.ttt">train-the-trainer</span>
+                    <span class="tag" data-i18n="tags.design">instructional design</span>
+                    <span class="tag" data-i18n="tags.blended">blended</span>
+                  </div>
+                </div>
+                <button class="more" type="button" data-modal="exp2" data-i18n="btn.case">Кейс</button>
+              </div>
+
+              <div class="item">
+                <div class="left">
+                  <p class="title" data-i18n="exp3.title">Тренер / Разработчик обучения (пример)</p>
+                  <p class="sub" data-i18n="exp3.sub">2017–2020 • Тренинги, курсы, наставничество</p>
+                  <div class="tags">
+                    <span class="tag" data-i18n="tags.facil">фасилитация</span>
+                    <span class="tag" data-i18n="tags.content">контент</span>
+                    <span class="tag" data-i18n="tags.practice">практика</span>
+                  </div>
+                </div>
+                <button class="more" type="button" data-modal="exp3" data-i18n="btn.case">Кейс</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2><span data-i18n="sec.projects">Проекты</span>
+              <button class="more" type="button" data-modal="projects" data-i18n="btn.details">Подробнее</button>
+            </h2>
+            <ul>
+              <li data-i18n="proj.li1">Архитектура обучения (траектории, матрица навыков, формат практики, оценка).</li>
+              <li data-i18n="proj.li2">Программы для руководителей (кейсы, симуляции, peer-learning, поддержка после обучения).</li>
+              <li data-i18n="proj.li3">Система подготовки тренеров/экспертов (стандарты, супервизия, контроль качества).</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2><span data-i18n="sec.skills">Навыки</span>
+              <button class="more" type="button" data-modal="skills" data-i18n="btn.details">Подробнее</button>
+            </h2>
+            <ul>
+              <li data-i18n="skills.li1">Instructional Design • методология разработки • сценарии • задания</li>
+              <li data-i18n="skills.li2">Фасилитация • тренерское мастерство • работа с группой</li>
+              <li data-i18n="skills.li3">Оценка эффективности (Kirkpatrick/OKR/метрики), диагностика потребностей</li>
+              <li data-i18n="skills.li4">Проектный менеджмент обучения, внедрение процессов и стандартов</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2><span data-i18n="sec.education">Образование</span>
+              <button class="more" type="button" data-modal="education" data-i18n="btn.details">Подробнее</button>
+            </h2>
+            <p data-i18n="edu.short">
+              Добавь: вуз/курсы/сертификаты. Можно вынести сертификаты в отдельную модалку или блок.
+            </p>
+          </div>
+
+          <div class="section">
+            <h2><span data-i18n="sec.portfolio">Портфолио</span>
+              <button class="more" type="button" data-modal="portfolio" data-i18n="btn.details">Подробнее</button>
+            </h2>
+            <ul>
+              <li data-i18n="port.li1">Программы тренингов/курсов (PDF/слайды) — 3–6 примеров</li>
+              <li data-i18n="port.li2">Методические гайды/стандарты (структура, требования, чек-листы)</li>
+              <li data-i18n="port.li3">Кейсы внедрения (цель → решение → результат)</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="card side">
+          <div class="panel">
+            <h3 data-i18n="side.focus">Фокус</h3>
+            <ul>
+              <li data-i18n="side.f1">Диагностика и карта компетенций</li>
+              <li data-i18n="side.f2">Дизайн программ и курсов</li>
+              <li data-i18n="side.f3">Методическая экспертиза</li>
+              <li data-i18n="side.f4">Архитектура траекторий</li>
+              <li data-i18n="side.f5">TTT и развитие тренеров</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3 data-i18n="side.value">Ценность</h3>
+            <p data-i18n="side.valueText">
+              Системно превращаю “хотим обучить” в измеримый результат: понятные цели, практика, поддержка и метрики.
+            </p>
+          </div>
+
+          <div class="panel">
+            <h3 data-i18n="side.stack">Инструменты</h3>
+            <p data-i18n="side.stackText">
+              LMS / blended learning, карты навыков, assessment, learning analytics (по необходимости), шаблоны и стандарты.
+            </p>
+          </div>
+
+          <div class="panel">
+            <h3 data-i18n="side.quick">Быстрые действия</h3>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+              <button class="action" type="button" data-modal="services">
+                <span data-i18n="side.serviceBtn">Чем могу помочь</span> <span>→</span>
+              </button>
+              <button class="action" type="button" data-modal="projects">
+                <span data-i18n="side.projectsBtn">Открыть проекты</span> <span>→</span>
+              </button>
+              <button class="action" type="button" data-modal="portfolio">
+                <span data-i18n="side.portfolioBtn">Открыть портфолио</span> <span>→</span>
+              </button>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        <div data-i18n="footer.hint">Модалки закрываются кликом вне окна или <span class="kbd">Esc</span>.</div>
+        <div><a href="#" data-modal="contacts" data-i18n="footer.link">Связаться</a></div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h3 class="modal-title" id="modalTitle">Title</h3>
+        <button class="icon-btn" id="closeBtn" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // =========================
+    // i18n dictionary
+    // =========================
+    const I18N = {
+      ru: {
+        "top.name":"Евгений Тютюнов",
+        "top.role":"Мастер тренер • методолог • архитектор обучения",
+        "top.contact":"Контакты",
+
+        "hero.h1":"Евгений Тютюнов",
+        "hero.subtitle":"Проектирую образовательные системы и программы: от диагностики потребностей до запуска и оценки результата. Соединяю методологию, тренерскую практику и архитектуру обучения. И у меня мой любимый сын навайбкодил этот сайт :)",
+        "hero.meta1":"✦ Россия / онлайн",
+        "hero.meta2":"✦ L&D • методология",
+        "hero.meta3":"✦ Архитектура обучения",
+        "hero.meta4":"✦ Корпоративное обучение",
+
+        "sec.profile":"Профиль",
+        "sec.experience":"Опыт",
+        "sec.projects":"Проекты",
+        "sec.skills":"Навыки",
+        "sec.education":"Образование",
+        "sec.portfolio":"Портфолио",
+
+        "btn.details":"Подробнее",
+        "btn.case":"Кейс",
+
+        "profile.short":"Мастер тренер и методолог, выстраиваю обучение как продукт: цели → навыки → практика → оценка → улучшения. Создаю программы, методические стандарты, траектории обучения и системы развития.",
+
+        "exp1.title":"Lead L&D / Методолог (пример)",
+        "exp1.sub":"2023–2025 • Корпоративный университет / Академия",
+        "exp2.title":"Мастер тренер / Тренер-методолог (пример)",
+        "exp2.sub":"2020–2023 • Программы для менеджеров и экспертов",
+        "exp3.title":"Тренер / Разработчик обучения (пример)",
+        "exp3.sub":"2017–2020 • Тренинги, курсы, наставничество",
+
+        "tags.arch":"архитектура",
+        "tags.method":"методология",
+        "tags.assess":"оценка",
+        "tags.ttt":"train-the-trainer",
+        "tags.design":"instructional design",
+        "tags.blended":"blended",
+        "tags.facil":"фасилитация",
+        "tags.content":"контент",
+        "tags.practice":"практика",
+
+        "proj.li1":"Архитектура обучения (траектории, матрица навыков, формат практики, оценка).",
+        "proj.li2":"Программы для руководителей (кейсы, симуляции, peer-learning, поддержка после обучения).",
+        "proj.li3":"Система подготовки тренеров/экспертов (стандарты, супервизия, контроль качества).",
+
+        "skills.li1":"Instructional Design • методология разработки • сценарии • задания",
+        "skills.li2":"Фасилитация • тренерское мастерство • работа с группой",
+        "skills.li3":"Оценка эффективности (Kirkpatrick/OKR/метрики), диагностика потребностей",
+        "skills.li4":"Проектный менеджмент обучения, внедрение процессов и стандартов",
+
+        "edu.short":"Добавь: вуз/курсы/сертификаты. Можно вынести сертификаты в отдельную модалку или блок.",
+
+        "port.li1":"Программы тренингов/курсов (PDF/слайды) — 3–6 примеров",
+        "port.li2":"Методические гайды/стандарты (структура, требования, чек-листы)",
+        "port.li3":"Кейсы внедрения (цель → решение → результат)",
+
+        "side.focus":"Фокус",
+        "side.f1":"Диагностика и карта компетенций",
+        "side.f2":"Дизайн программ и курсов",
+        "side.f3":"Методическая экспертиза",
+        "side.f4":"Архитектура траекторий",
+        "side.f5":"TTT и развитие тренеров",
+
+        "side.value":"Ценность",
+        "side.valueText":"Системно превращаю “хотим обучить” в измеримый результат: понятные цели, практика, поддержка и метрики.",
+
+        "side.stack":"Инструменты",
+        "side.stackText":"LMS / blended learning, карты навыков, assessment, learning analytics (по необходимости), шаблоны и стандарты.",
+
+        "side.quick":"Быстрые действия",
+        "side.serviceBtn":"Чем могу помочь",
+        "side.projectsBtn":"Открыть проекты",
+        "side.portfolioBtn":"Открыть портфолио",
+
+        "footer.hint":"Модалки закрываются кликом вне окна или <span class='kbd'>Esc</span>.",
+        "footer.link":"Связаться",
+      },
+
+      en: {
+        "top.name":"Evgeniy Tyutyunov",
+        "top.role":"Master Trainer • Methodologist • Learning Architect",
+        "top.contact":"Contacts",
+
+        "hero.h1":"Evgeniy Tyutyunov",
+        "hero.subtitle":"I design learning systems and programs end-to-end: from needs analysis to launch and impact measurement. I combine methodology, facilitation/training practice, and learning architecture.",
+        "hero.meta1":"✦ Russia / remote",
+        "hero.meta2":"✦ L&D • methodology",
+        "hero.meta3":"✦ learning architecture",
+        "hero.meta4":"✦ corporate learning",
+
+        "sec.profile":"Profile",
+        "sec.experience":"Experience",
+        "sec.projects":"Projects",
+        "sec.skills":"Skills",
+        "sec.education":"Education",
+        "sec.portfolio":"Portfolio",
+
+        "btn.details":"Details",
+        "btn.case":"Case",
+
+        "profile.short":"Master trainer and learning methodologist. I build learning as a product: goals → skills → practice → assessment → improvement. I create programs, standards, learning paths, and development systems.",
+
+        "exp1.title":"Lead L&D / Learning Methodologist (sample)",
+        "exp1.sub":"2023–2025 • Corporate University / Academy",
+        "exp2.title":"Master Trainer / Trainer-Methodologist (sample)",
+        "exp2.sub":"2020–2023 • Programs for managers and subject-matter experts",
+        "exp3.title":"Trainer / Learning Developer (sample)",
+        "exp3.sub":"2017–2020 • Trainings, courses, mentoring",
+
+        "tags.arch":"architecture",
+        "tags.method":"methodology",
+        "tags.assess":"assessment",
+        "tags.ttt":"train-the-trainer",
+        "tags.design":"instructional design",
+        "tags.blended":"blended",
+        "tags.facil":"facilitation",
+        "tags.content":"content",
+        "tags.practice":"practice",
+
+        "proj.li1":"Learning architecture (paths, skill matrix, practice formats, assessment).",
+        "proj.li2":"Leadership programs (cases, simulations, peer learning, post-training support).",
+        "proj.li3":"Trainer/SME enablement system (standards, supervision, quality control).",
+
+        "skills.li1":"Instructional Design • learning methodology • scenarios • practice tasks",
+        "skills.li2":"Facilitation • trainer craft • group dynamics",
+        "skills.li3":"Impact measurement (Kirkpatrick/OKR/metrics), needs analysis",
+        "skills.li4":"Learning project management, process and standards implementation",
+
+        "edu.short":"Add your university/courses/certifications here. You can also move certificates to a separate modal.",
+
+        "port.li1":"Training/course programs (PDF/slides) — 3–6 samples",
+        "port.li2":"Methodological guides/standards (structure, requirements, checklists)",
+        "port.li3":"Implementation cases (goal → solution → outcome)",
+
+        "side.focus":"Focus",
+        "side.f1":"Needs analysis & competency maps",
+        "side.f2":"Program and course design",
+        "side.f3":"Methodological expertise",
+        "side.f4":"Learning path architecture",
+        "side.f5":"TTT & trainer development",
+
+        "side.value":"Value",
+        "side.valueText":"I turn “we need training” into measurable outcomes: clear goals, practice, support and metrics.",
+
+        "side.stack":"Tooling",
+        "side.stackText":"LMS / blended learning, skill maps, assessment, learning analytics (when needed), templates and standards.",
+
+        "side.quick":"Quick actions",
+        "side.serviceBtn":"How I can help",
+        "side.projectsBtn":"Open projects",
+        "side.portfolioBtn":"Open portfolio",
+
+        "footer.hint":"Close modals by clicking outside or pressing <span class='kbd'>Esc</span>.",
+        "footer.link":"Get in touch",
+      }
+    };
+
+    // =========================
+    // Modal content (RU/EN)
+    // =========================
+    const MODALS = {
+      profile: {
+        titleKey: {ru:"Профиль — детали", en:"Profile — details"},
+        html: {
+          ru: `
+            <p><b>Что делаю:</b> проектирую обучение как систему и как продукт.</p>
+            <ul>
+              <li>Диагностика: цели бизнеса → задачи → навыки → пробелы</li>
+              <li>Дизайн: программа, модули, практика, поддержка, контроль качества</li>
+              <li>Оценка: метрики, чек-листы, ассессмент, пост-поддержка</li>
+              <li>Запуск: обучение тренеров/экспертов, пилот, итерации</li>
+            </ul>
+          `,
+          en: `
+            <p><b>What I do:</b> I design learning as a system and as a product.</p>
+            <ul>
+              <li>Diagnosis: business goals → tasks → skills → gaps</li>
+              <li>Design: program structure, modules, practice, support, QA</li>
+              <li>Measurement: metrics, rubrics, assessment, reinforcement</li>
+              <li>Launch: trainer/SME enablement, pilot, iterations</li>
+            </ul>
+          `
+        }
+      },
+      experience: {
+        titleKey: {ru:"Опыт — расширенно", en:"Experience — expanded"},
+        html: {
+          ru: `
+            <p>Формат: <b>роль → задачи → результаты</b> (добавь свои реальные данные).</p>
+            <ul>
+              <li>Запуск/перезапуск академии, стандартизация методологии</li>
+              <li>Проектирование траекторий (онбординг → развитие)</li>
+              <li>TTT: обучение тренеров и экспертов, супервизии</li>
+              <li>Система оценки: практика, QA, метрики</li>
+            </ul>
+          `,
+          en: `
+            <p>Format: <b>role → scope → outcomes</b> (replace with real data).</p>
+            <ul>
+              <li>Building/rebuilding an academy, methodology standardization</li>
+              <li>Role-based learning paths (onboarding → development)</li>
+              <li>TTT: trainer/SME enablement and supervision</li>
+              <li>Measurement system: practice, QA, metrics</li>
+            </ul>
+          `
+        }
+      },
+      exp1: {
+        titleKey: {ru:"Кейс: Lead L&D / Методолог", en:"Case: Lead L&D / Methodologist"},
+        html: {
+          ru: `
+            <p><b>Задача:</b> выстроить систему обучения под ключевые роли.</p>
+            <ul>
+              <li>Требования → навыки → критерии</li>
+              <li>Траектория: модули → практика → оценка</li>
+              <li>Пилот, подготовка тренеров, стандарты</li>
+              <li><b>Результат:</b> (вставь метрики)</li>
+            </ul>
+          `,
+          en: `
+            <p><b>Goal:</b> build an end-to-end learning system for key roles.</p>
+            <ul>
+              <li>Requirements → skills → criteria</li>
+              <li>Path: modules → practice → assessment</li>
+              <li>Pilot, trainer enablement, standards</li>
+              <li><b>Outcome:</b> (add metrics)</li>
+            </ul>
+          `
+        }
+      },
+      exp2: {
+        titleKey: {ru:"Кейс: Мастер тренер / Тренер-методолог", en:"Case: Master Trainer / Trainer-Methodologist"},
+        html: {
+          ru: `
+            <p><b>Задача:</b> усилить качество тренингов и практики.</p>
+            <ul>
+              <li>Пересборка: цели, упражнения, кейсы, разборы</li>
+              <li>Методичка тренера + критерии качества</li>
+              <li>Пост-поддержка: задания, peer-review</li>
+              <li><b>Результат:</b> (вставь метрики/отзывы)</li>
+            </ul>
+          `,
+          en: `
+            <p><b>Goal:</b> improve training quality and practice design.</p>
+            <ul>
+              <li>Rebuilt goals, exercises, cases, debriefs</li>
+              <li>Trainer playbook + QA criteria</li>
+              <li>Reinforcement: tasks, peer review</li>
+              <li><b>Outcome:</b> (add metrics/feedback)</li>
+            </ul>
+          `
+        }
+      },
+      exp3: {
+        titleKey: {ru:"Кейс: Тренер / Разработчик обучения", en:"Case: Trainer / Learning Developer"},
+        html: {
+          ru: `
+            <p><b>Задача:</b> проведение обучения и разработка материалов.</p>
+            <ul>
+              <li>Тренинги и фасилитации</li>
+              <li>Материалы, задания, оценка</li>
+              <li>Наставничество и поддержка</li>
+            </ul>
+          `,
+          en: `
+            <p><b>Goal:</b> deliver training and develop learning materials.</p>
+            <ul>
+              <li>Training delivery & facilitation</li>
+              <li>Content, tasks, assessment</li>
+              <li>Mentoring & support</li>
+            </ul>
+          `
+        }
+      },
+      projects: {
+        titleKey: {ru:"Проекты — детали", en:"Projects — details"},
+        html: {
+          ru: `<ul>
+              <li><b>Онбординг</b>: дорожная карта, практика, QA</li>
+              <li><b>Программа руководителей</b>: кейсы, симуляции, peer-learning</li>
+              <li><b>Продажи/сервис</b>: тренинг → практика → коучинг → метрики</li>
+              <li><b>TTT</b>: подготовка тренеров/экспертов + супервизия</li>
+              <li><b>Методстандарты</b>: шаблоны, чек-листы, требования</li>
+            </ul>`,
+          en: `<ul>
+              <li><b>Onboarding</b>: roadmap, practice, QA</li>
+              <li><b>Leadership</b>: cases, simulations, peer learning</li>
+              <li><b>Sales/service</b>: training → practice → coaching → metrics</li>
+              <li><b>TTT</b>: enablement + supervision</li>
+              <li><b>Standards</b>: templates, checklists, requirements</li>
+            </ul>`
+        }
+      },
+      skills: {
+        titleKey: {ru:"Навыки — детализация", en:"Skills — breakdown"},
+        html: {
+          ru: `<p><b>Методология:</b> анализ потребностей, дизайн, практика, QA.</p>
+               <p><b>Тренерство:</b> фасилитация, сложные аудитории.</p>
+               <p><b>Оценка:</b> рубрики, критерии, метрики.</p>
+               <p><b>Системы:</b> траектории, матрицы навыков, процессы L&D.</p>`,
+          en: `<p><b>Methodology:</b> needs analysis, design, practice, QA.</p>
+               <p><b>Training:</b> facilitation, tough audiences.</p>
+               <p><b>Measurement:</b> rubrics, criteria, metrics.</p>
+               <p><b>Systems:</b> paths, skill matrices, L&D processes.</p>`
+        }
+      },
+      education: {
+        titleKey: {ru:"Образование и сертификаты", en:"Education & certifications"},
+        html: {
+          ru: `<ul><li><b>ВУЗ:</b> …</li><li><b>Курсы:</b> …</li><li><b>Сертификаты:</b> …</li></ul>`,
+          en: `<ul><li><b>University:</b> …</li><li><b>Courses:</b> …</li><li><b>Certificates:</b> …</li></ul>`
+        }
+      },
+      portfolio: {
+        titleKey: {ru:"Портфолио — примеры", en:"Portfolio — samples"},
+        html: {
+          ru: `<ul>
+              <li>Программа “…” — цели/модули/практика</li>
+              <li>Методгайд “…” — стандарты и чек-листы</li>
+              <li>Кейс “…” — задача → решение → результат</li>
+            </ul>`,
+          en: `<ul>
+              <li>Program “…” — goals/modules/practice</li>
+              <li>Method guide “…” — standards & checklists</li>
+              <li>Case “…” — goal → solution → outcome</li>
+            </ul>`
+        }
+      },
+      services: {
+        titleKey: {ru:"Чем могу помочь", en:"How I can help"},
+        html: {
+          ru: `<ul>
+              <li><b>Аудит обучения</b>: где теряется эффект, план улучшений</li>
+              <li><b>Проектирование программ</b>: карта навыков, дизайн, материалы</li>
+              <li><b>TTT</b>: обучение тренеров/экспертов, супервизия</li>
+              <li><b>Экосистема</b>: процессы, стандарты, метрики</li>
+            </ul>`,
+          en: `<ul>
+              <li><b>Learning audit</b>: diagnose gaps, improvement plan</li>
+              <li><b>Program design</b>: skill maps, design, materials</li>
+              <li><b>TTT</b>: enablement, supervision</li>
+              <li><b>Ecosystem</b>: processes, standards, metrics</li>
+            </ul>`
+        }
+      },
+      contacts: {
+        titleKey: {ru:"Контакты", en:"Contacts"},
+        html: {
+          ru: `<ul>
+              <li><b>Email:</b> example@mail.com</li>
+              <li><b>Telegram:</b> @username</li>
+              <li><b>LinkedIn / HH:</b> ссылка</li>
+            </ul>`,
+          en: `<ul>
+              <li><b>Email:</b> example@mail.com</li>
+              <li><b>Telegram:</b> @username</li>
+              <li><b>LinkedIn:</b> link</li>
+            </ul>`
+        }
+      }
+    };
+
+    // =========================
+    // Language switching
+    // =========================
+    const btnRU = document.getElementById("btnRU");
+    const btnEN = document.getElementById("btnEN");
+    const LANG_KEY = "cv_lang";
+
+    function setActiveLangUI(lang){
+      btnRU.classList.toggle("active", lang === "ru");
+      btnEN.classList.toggle("active", lang === "en");
+      document.documentElement.lang = (lang === "en") ? "en" : "ru";
+    }
+
+    function applyI18n(lang){
+      const dict = I18N[lang] || I18N.ru;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const value = dict[key];
+        if(value !== undefined){
+          if(key.includes("footer.hint")) el.innerHTML = value;
+          else el.textContent = value;
+        }
+      });
+      setActiveLangUI(lang);
+    }
+
+    function getLang(){
+      const saved = localStorage.getItem(LANG_KEY);
+      if(saved === "ru" || saved === "en") return saved;
+      const nav = (navigator.language || "ru").toLowerCase();
+      return nav.startsWith("en") ? "en" : "ru";
+    }
+
+    function setLang(lang){
+      localStorage.setItem(LANG_KEY, lang);
+      applyI18n(lang);
+    }
+
+    btnRU.addEventListener("click", ()=> setLang("ru"));
+    btnEN.addEventListener("click", ()=> setLang("en"));
+    setLang(getLang());
+
+    // =========================
+    // Modal logic (mobile-friendly scroll)
+    // =========================
+    const overlay = document.getElementById("overlay");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBody");
+    const closeBtn = document.getElementById("closeBtn");
+
+    function currentLang(){ return (localStorage.getItem(LANG_KEY) === "en") ? "en" : "ru"; }
+
+    function openModal(key){
+      const m = MODALS[key];
+      if(!m) return;
+      const lang = currentLang();
+      modalTitle.textContent = m.titleKey?.[lang] || "Details";
+      modalBody.innerHTML = m.html?.[lang] || "";
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+      closeBtn.focus();
+    }
+
+    function closeModal(){
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-modal]");
+      if(btn){
+        e.preventDefault();
+        openModal(btn.dataset.modal);
+      }
+      if(e.target === overlay) closeModal();
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeModal();
+    });
+
+    // =========================
+    // Snowflakes (optimized)
+    // - reduced on mobile
+    // - pauses when tab hidden
+    // - respects prefers-reduced-motion
+    // - capped FPS for smoother battery usage
+    // =========================
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d", { alpha: true });
+
+    let paused = false;
+    document.addEventListener("visibilitychange", () => {
+      paused = document.hidden;
+    });
+
+    function resize(){
+      // keep DPR in check
+      const dpr = Math.max(1, Math.min(1.6, window.devicePixelRatio || 1));
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    window.addEventListener("resize", resize);
+
+    const flakes = [];
+    const isMobile = window.matchMedia("(max-width: 560px)").matches;
+    const baseCount = Math.floor((window.innerWidth * window.innerHeight) / (isMobile ? 17000 : 11000));
+    const count = Math.min(isMobile ? 80 : 160, Math.max(isMobile ? 35 : 60, baseCount));
+
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+
+    function addFlake(initial=false){
+      flakes.push({
+        x: rand(0, window.innerWidth),
+        y: initial ? rand(0, window.innerHeight) : rand(-80,-10),
+        r: rand(0.8, isMobile ? 2.2 : 2.8),
+        speed: rand(0.6, isMobile ? 1.8 : 2.3),
+        drift: rand(-0.6, 0.6),
+        wobble: rand(0, Math.PI*2),
+        o: rand(0.35, 0.95)
+      });
+    }
+
+    function initSnow(){
+      if(reduceMotion) return;
+      resize();
+      flakes.length = 0;
+      for(let i=0;i<count;i++) addFlake(true);
+    }
+    initSnow();
+
+    // FPS cap (~30)
+    let last = 0;
+    const fpsInterval = 1000 / 30;
+
+    function tick(ts){
+      if(reduceMotion || paused){
+        requestAnimationFrame(tick);
+        return;
+      }
+      if(ts - last < fpsInterval){
+        requestAnimationFrame(tick);
+        return;
+      }
+      last = ts;
+
+      ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
+      for(const f of flakes){
+        f.wobble += 0.01 + f.r * 0.002;
+        f.x += f.drift + Math.sin(f.wobble)*0.35;
+        f.y += f.speed * (0.65 + f.r/3.2);
+
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(242,242,242,${f.o})`;
+        ctx.fill();
+
+        // subtle highlight
+        ctx.beginPath();
+        ctx.arc(f.x - f.r*0.35, f.y - f.r*0.35, f.r*0.45, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(255,255,255,${f.o*0.55})`;
+        ctx.fill();
+
+        if(f.y > window.innerHeight + 50){
+          f.y = rand(-90,-20);
+          f.x = rand(0, window.innerWidth);
+        }
+        if(f.x < -70) f.x = window.innerWidth + 35;
+        if(f.x > window.innerWidth + 70) f.x = -35;
+      }
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // Re-init snow on resize/orientation
+    let rTO;
+    window.addEventListener("resize", () => {
+      clearTimeout(rTO);
+      rTO = setTimeout(initSnow, 150);
+    });
+  </script>
+</body>
+</html>
