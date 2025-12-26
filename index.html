@@ -505,6 +505,27 @@
       .item{ flex-direction:column; }
       .more{ width:100%; }
       .btn{ display:none; }
+      /* Mobile hero layout fix */
+      .heroTop{ flex-direction: column; align-items: stretch; gap: 12px; }
+      .heroTop > div:first-child{ padding-right: 0; }
+      .avatar{
+        width: min(72vw, 260px);
+        height: 250px;
+        margin: 10px auto 0;
+      }
+      .avatar img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Prevent ultra-narrow word breaking on mobile */
+      h1{
+        overflow-wrap: normal;
+        word-break: normal;
+        hyphens: auto;
+      }
+
+
     }
 
     /* Modal */
